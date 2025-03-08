@@ -1,45 +1,25 @@
-import { useCallback, useEffect, useState } from '@lynx-js/react'
-
 import './App.css'
-import arrow from './assets/arrow.png'
-import lynxLogo from './assets/lynx-logo.png'
-import reactLynxLogo from './assets/react-logo.png'
+import fetes from "./data/feteDuJour.json";
+
 
 export function App() {
-  const [alterLogo, setAlterLogo] = useState(false)
+  const today = new Date();
+  const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Nomvembre", "Décembre"];
 
-  useEffect(() => {
-    console.info('Hello, ReactLynx')
-  }, [])
+  const day = today.getDate(); 
+  const month = months[today.getMonth()];
+  const year = today.getFullYear();
+  const formattedDate = `${day} ${month} ${year}`;
 
-  const onTap = useCallback(() => {
-    'background only'
-    setAlterLogo(!alterLogo)
-  }, [alterLogo])
+  const fete = fetes[today.getMonth()][day - 1][0]
 
   return (
-    <view>
-      <view className='Background' />
-      <view className='App'>
-        <view className='Banner'>
-          <view className='Logo' bindtap={onTap}>
-            {alterLogo
-              ? <image src={reactLynxLogo} className='Logo--react' />
-              : <image src={lynxLogo} className='Logo--lynx' />}
-          </view>
-          <text className='Title'>React</text>
-          <text className='Subtitle'>on Lynx</text>
-        </view>
-        <view className='Content'>
-          <image src={arrow} className='Arrow' />
-          <text className='Description'>Tap the logo and have fun!</text>
-          <text className='Hint'>
-            Edit<text style={{ fontStyle: 'italic' }}>{' src/App.tsx '}</text>
-            to see updates!
-          </text>
-        </view>
-        <view style={{ flex: 1 }}></view>
+    <view className='body'>
+      <view className='feteDuJour'>
+        <text className='jour'>{formattedDate}</text>
+        <text className='h2'>Fête du jour : </text>
+        <text className='fete'>{fete + " " + fete}</text>
       </view>
     </view>
-  )
+  );
 }
